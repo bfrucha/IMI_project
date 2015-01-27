@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:imi="http://intelligent-multimodal-interaction.org/relations/"
+  xml:base="http://intelligent-multimodal-interaction.org/concepts/">
+
+<!-- WARNING : use the RDF validator at : http://www.w3.org/RDF/Validator/ -->
+
+<!-- INPUT / OUTPUT -->
+
+<rdf:Description rdf:about="InputModality">
+	<rdf:type rdf:resource="Modality"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="OutputModality">
+    <rdf:type rdf:resource="Modality"/>
+</rdf:Description>
+
+
+<!-- INPUTS -->
+
+<!-- Touch section -->
+
+<rdf:Description rdf:about="Touch">
+	<rdf:type rdf:resource="InputModality"/>
+</rdf:Description>
+ 
+	 <rdf:Description rdf:about="Gesture">
+	    <rdf:type rdf:resource="Touch"/>
+		<imi:constraint-value>driving</imi:constraint-value>
+		<imi:constraint-value>off-line</imi:constraint-value>
+	 </rdf:Description>
+ 
+	 <rdf:Description rdf:about="Button">
+	   <rdf:type rdf:resource="Touch"/>
+	   <imi:constraint-value>idle</imi:constraint-value>
+		<imi:constraint-value>off-line</imi:constraint-value>
+	 </rdf:Description>
+ 
+ 
+
+<!-- End touch section -->
+
+<!-- Gestures section -->
+
+<rdf:Description rdf:about="AirGesture">
+	<rdf:type rdf:resource="InputModality"/>
+	<imi:constraint-value>driving</imi:constraint-value>
+</rdf:Description>
+ 
+<!-- End Gestures section -->
+
+
+<!-- Speech section -->
+
+<rdf:Description rdf:about="Speech">
+    <rdf:type rdf:resource="InputModality"/>
+	<imi:constraint-value>driving</imi:constraint-value>
+	<imi:constraint-value>low</imi:constraint-value>
+	<imi:constraint-value>off-line</imi:constraint-value>
+</rdf:Description>
+  
+<!-- End Speech section -->
+
+<!-- END OF INPUTS -->
+
+
+<!-- OUTPUTS -->
+<!-- Sound section -->
+
+<rdf:Description rdf:about="Music">
+    <rdf:type rdf:resource="OutputModality"/>
+	<imi:constraint-value>off-line</imi:constraint-value>
+</rdf:Description>
+
+<rdf:Description rdf:about="SoundAlert">
+    <rdf:type rdf:resource="OutputModality"/>
+	<imi:constraint-value>low</imi:constraint-value>
+</rdf:Description>  
+
+<!-- End sound section -->
+
+<!-- Speech section -->
+
+<rdf:Description rdf:about="TextToSpeech">
+    <rdf:type rdf:resource="OutputModality"/>
+	<imi:constraint-value>low</imi:constraint-value>
+	<imi:constraint-value>off-line</imi:constraint-value>
+</rdf:Description>
+
+<!-- End Speech section -->
+
+<!-- Image section -->
+
+<rdf:Description rdf:about="Image">
+	<rdf:type rdf:resource="OutputModality"/>
+</rdf:Description>
+  
+	<rdf:Description rdf:about="Night">
+		<rdf:type rdf:resource="Image"/>
+	</rdf:Description>
+  
+ 	<rdf:Description rdf:about="Day">
+		<rdf:type rdf:resource="Image"/>
+	</rdf:Description>
+	
+<rdf:Description rdf:about="GraphicAlert">
+	<rdf:type rdf:resource="OutputModality"/>
+	<imi:constraint-value>high</imi:constraint-value>
+</rdf:Description>
+
+<!-- End Image section -->
+
+<!-- Touch section -->
+
+<rdf:Description rdf:about="Vibration">
+    <rdf:type rdf:resource="OutputModality"/>
+</rdf:Description>
+  
+<!-- End Touch section -->
+
+<!-- END OF OUPUTS -->
+
+</rdf:RDF>
