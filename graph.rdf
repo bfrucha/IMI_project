@@ -31,8 +31,8 @@
 	 </rdf:Description>
  
 	 <rdf:Description rdf:about="Button">
-	   <rdf:type rdf:resource="Touch"/>
-	   <imi:constraint-value>idle</imi:constraint-value>
+	    <rdf:type rdf:resource="Touch"/>
+	    <imi:constraint-value>idle</imi:constraint-value>
 		<imi:constraint-value>off-line</imi:constraint-value>
 	 </rdf:Description>
  
@@ -91,21 +91,24 @@
 
 <!-- Image section -->
 
-<rdf:Description rdf:about="Image">
+<rdf:Description rdf:about="Graphics">
 	<rdf:type rdf:resource="OutputModality"/>
 </rdf:Description>
   
-	<rdf:Description rdf:about="Night">
-		<rdf:type rdf:resource="Image"/>
+	<rdf:Description rdf:about="NightGraphics">
+		<rdf:type rdf:resource="Graphics"/>
+		<imi:constraint-value>night</imi:constraint-value>
 	</rdf:Description>
   
- 	<rdf:Description rdf:about="Day">
-		<rdf:type rdf:resource="Image"/>
+ 	<rdf:Description rdf:about="DayGraphics">
+		<rdf:type rdf:resource="Graphics"/>
+		<imi:constraint-value>day</imi:constraint-value>
 	</rdf:Description>
 	
 <rdf:Description rdf:about="GraphicAlert">
 	<rdf:type rdf:resource="OutputModality"/>
 	<imi:constraint-value>high</imi:constraint-value>
+	<imi:constraint-value>on-line</imi:constraint-value>
 </rdf:Description>
 
 <!-- End Image section -->
