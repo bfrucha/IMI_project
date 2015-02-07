@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">IMI_Project</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_settings">Settings</string>
+    <string name="main_text">Do gestures here !</string>
+    <string name="menu_scenario">Select a scenario</string>
+
+</resources>
