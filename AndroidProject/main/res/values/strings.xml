@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">IMI_project</string>
+    <string name="app_name">IMI_Project</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
+    <string name="load_scenario">Load a scenario</string>
+    <string name="title_scenario">Load a scenario</string>
+	<string name="cancel_scenario">Cancel</string>
+    
 </resources>

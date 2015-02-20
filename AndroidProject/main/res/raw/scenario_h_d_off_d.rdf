@@ -19,8 +19,8 @@
 
 <rdf:Description rdf:about="CurrentLineStatus">
 	<rdf:type rdf:resource="LineStatus"/>
-	<!-- <imi:constraint-value>off-line</imi:constraint-value> -->
-	<imi:constraint-value>on-line</imi:constraint-value>
+	<imi:constraint-value>off-line</imi:constraint-value>
+	<!-- <imi:constraint-value>on-line</imi:constraint-value> -->
 </rdf:Description>
 
 <rdf:Description rdf:about="CurrentBrightness">
