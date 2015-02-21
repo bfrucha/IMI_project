@@ -1,4 +1,4 @@
-package upsud.students.imi_project.service;
+package upsud.students.imi_project.services;
 
 import java.util.ArrayList;
 import java.util.Locale;

@@ -1,28 +1,44 @@
 package upsud.students.imi_project;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import upsud.students.imi_project.dialogs.ScenarioDialog;
+import upsud.students.imi_project.music.Song;
+import upsud.students.imi_project.music.SongList;
 import upsud.students.imi_project.queries.Queries;
-import upsud.students.imi_project.service.VoiceCommand;
+import upsud.students.imi_project.services.VoiceCommand;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.FragmentManager;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +51,8 @@ public class MainActivity extends ActionBarActivity {
 	Intent srIntent;
 	VoiceCommand voiceCommand;
 	
+	SongList songList;
+	
 	// total number of modalities contained in Queries.java
 	public static boolean[] MODALITIES = new boolean[Queries.MODALITIES_NUMBER];
  	
@@ -43,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// Text To Speech
 		tts = new TextToSpeech(getBaseContext(), new TextToSpeech.OnInitListener() {
 			
 			@Override
@@ -54,12 +73,16 @@ public class MainActivity extends ActionBarActivity {
 			}
 		});
 		
+		// Speech Recognizer
 	    Context activityContext = getBaseContext();
 	    srIntent = new Intent(activityContext, VoiceCommand.class);
 	    activityContext.startService(srIntent);
+	    
+	    // Song list
+	    songList = new SongList();
+	    getSongList();
 	}
-
-
+	
 	@Override
 	public void onPause() {
 		if(tts !=null){
@@ -138,5 +161,56 @@ public class MainActivity extends ActionBarActivity {
 	   } else {
 		   Toast.makeText(getBaseContext(), "Text to speech is disabled", Toast.LENGTH_SHORT).show();
 	   }
+   }
+   
+   public void getSongList() {
+	   ContentResolver musicResolver = getContentResolver();
+	   Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+	   Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+		   
+	   while(musicCursor.moveToNext()) {
+		   
+		   // get song attributes
+		   String title = musicCursor.getString(musicCursor.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE));
+		   
+		   long id = musicCursor.getLong(musicCursor.getColumnIndex(android.provider.MediaStore.Audio.Media._ID));
+		   
+		   String artist = musicCursor.getString(musicCursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ARTIST));
+		   
+		   String album = musicCursor.getString(musicCursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM));
+		   
+		   long albumId = musicCursor.getLong(musicCursor.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM_ID)); 
+		   
+		   // find and attach cover to the song
+		   Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
+           Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
+
+           Bitmap cover = null;
+           try {
+        	   cover = BitmapFactory.decodeStream(musicResolver.openInputStream(albumArtUri));
+        	   
+        	   if(cover == null) {
+        		   cover = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.no_cover);
+        	   }
+        	   
+        	   // cover = MediaStore.Images.Media.getBitmap(getBaseContext().getContentResolver(), albumArtUri);
+           } catch (FileNotFoundException exception) {
+               exception.printStackTrace();
+               cover = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.no_cover);
+           } catch (IOException e) {
+        	   e.printStackTrace();
+           }
+
+		   Song song = new Song(id, title, artist, album, cover);
+		   songList.addSong(song);
+	   }
+
+	   // DEBUG
+	   // for(Song s : songList) { Log.d("songs", s.getTitle() + " " + s.getAlbum()); }
+	   // for(Map.Entry<String, ArrayList<Song>> entry : songList.sortByAlbum().entrySet()) {
+	   //   Log.d("song", "Album : " + entry.getKey());
+		   
+	   //   for(Song song : entry.getValue()) { Log.d("song", song.getTitle()); }
+	   //}
    }
 }

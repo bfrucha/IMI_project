@@ -25,6 +25,8 @@ import upsud.students.imi_project.R;
 
 public class Queries {
 
+	public static final int MODALITIES_NUMBER = 13;
+	
 	/** INPUT MODALITIES **/
 	public static final int IM_TOUCH = 0;
 	public static final int IM_GESTURE = 1;
@@ -118,7 +120,7 @@ public class Queries {
 			String constraint = solution.getLiteral("c").toString();
 			
 			// DEBUG
-			Log.d("Input Modalities 1 :", concept + " " + constraint);
+			// Log.d("Input Modalities 1 :", concept + " " + constraint);
 			
 			try { 
 				inputModalities.get(concept).add(constraint);
@@ -155,7 +157,7 @@ public class Queries {
 			
 
 			// DEBUG
-			Log.d("Input Modalities 2 : ", concept + " " + constraint);
+			// Log.d("Input Modalities 2 : ", concept + " " + constraint);
 			
 			try { 
 				inputModalities.get(concept).add(constraint);
@@ -261,7 +263,7 @@ public class Queries {
 				QuerySolution solution = results.next();
 				
 				// DEBUG
-				Log.d("Results", solution.toString());
+				// Log.d("Results", solution.toString());
 				
 				String constraint = solution.getLiteral("c").toString();
 			
@@ -305,16 +307,16 @@ public class Queries {
 		
 		// DEBUG
 		//ArrayList<Integer> list = new ArrayList<Integer>();
-		for(String modality : inputModalities.keySet()) {
-			String text = "";
-			for(String constraint : inputModalities.get(modality)) { text += constraint + " "; }
-			Log.d(modality, text);
-		}
-		for(String modality : outputModalities.keySet()) { 
-			String text = "";
-			for(String constraint : outputModalities.get(modality)) { text += constraint + " "; }
-			Log.d(modality, text);
-		}
+		//for(String modality : inputModalities.keySet()) {
+		//	String text = "";
+		//	for(String constraint : inputModalities.get(modality)) { text += constraint + " "; }
+		//	Log.d(modality, text);
+		//}
+		//for(String modality : outputModalities.keySet()) { 
+		//	String text = "";
+		//	for(String constraint : outputModalities.get(modality)) { text += constraint + " "; }
+		//	Log.d(modality, text);
+		//}
 		
 		//for(Integer i : list) { Log.d("modality number", i+""); }
 		
