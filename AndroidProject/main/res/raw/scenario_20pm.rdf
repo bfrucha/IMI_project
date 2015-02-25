@@ -6,15 +6,15 @@
 
 <rdf:Description rdf:about="CurrentNoise">
 	<rdf:type rdf:resource="Noise"/>
-	<!-- <imi:constraint-value>low</imi:constraint-value> -->
-	<imi:constraint-value>high</imi:constraint-value>
+	<imi:constraint-value>low</imi:constraint-value>
+	<!-- <imi:constraint-value>high</imi:constraint-value> -->
 </rdf:Description>
 
 
 <rdf:Description rdf:about="CurrentSpeed">
 	<rdf:type rdf:resource="Speed"/>
 	<!-- <imi:constraint-value>idle</imi:constraint-value> -->
-	<imi:constraint-value>driving</imi:constraint-value>
+	<imi:constraint-value>driving</imi:constraint-value> -->
 </rdf:Description>
 
 <rdf:Description rdf:about="CurrentLineStatus">
@@ -25,8 +25,8 @@
 
 <rdf:Description rdf:about="CurrentBrightness">
 	<rdf:type rdf:resource="Brightness"/>
-	<!-- <imi:constraint-value>night</imi:constraint-value> -->
-	<imi:constraint-value>day</imi:constraint-value>
+	<imi:constraint-value>night</imi:constraint-value>
+	<!-- <imi:constraint-value>day</imi:constraint-value> -->
 </rdf:Description>
 
 
