@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameCall"
+        android:layout_centerHorizontal="true"
+        android:text="NAME FIRSTNAME"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phoneNumber"
+        android:text="0606060606"
+        android:layout_below="@+id/nameCall"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/contactPhoto"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/person_icon"
+        android:layout_below="@+id/phoneNumber"
+        />
+    <!--<com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/contactPhoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/dragons"
+        app:border_color="#EEEEEE"
+        app:border_width="4dp"
+        app:shadow="true"
+        android:layout_below="@+id/phoneNumber"/>
+-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/contactPhoto"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="fitXY"
+            android:id="@+id/callButton"
+            android:src="@drawable/call"
+            android:layout_gravity="center"
+            android:layout_below="@+id/nameCall"/>
+
+        <ImageButton
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="fitXY"
+            android:id="@+id/endCallButton"
+            android:src="@drawable/endcall"
+            android:layout_below="@+id/nameCall"
+            android:layout_toRightOf="@+id/callButton"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
