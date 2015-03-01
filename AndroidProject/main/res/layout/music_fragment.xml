@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
     <ListView
         android:id="@+id/listview"
-        android:layout_width="100dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/cover"
+        android:layout_toStartOf="@+id/cover"/>
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/cover"
@@ -16,10 +19,9 @@
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/dragons"
+        android:src="@drawable/no_cover"
         app:border_color="#EEEEEE"
-        app:border_width="4dp"
-        app:shadow="true" />
+        app:border_width="4dp"/>
 
     <ImageButton
         android:id="@+id/play"
@@ -77,8 +79,8 @@
         android:layout_above="@+id/seekbar"
         android:layout_alignLeft="@+id/cover"
         android:layout_alignStart="@+id/cover"
-        android:text="3.12"
-        android:textColor="@android:color/white" />
+        android:text="0.00"
+        android:textColor="@color/grey" />
 
     <TextView
         android:id="@+id/totalDuration"
@@ -87,8 +89,8 @@
         android:layout_above="@+id/seekbar"
         android:layout_alignEnd="@+id/cover"
         android:layout_alignRight="@+id/cover"
-        android:text="4.55"
-        android:textColor="@android:color/white" />
+        android:text="0.00"
+        android:textColor="@color/light_grey" />
 
     <SeekBar
         android:id="@+id/seekbar"
@@ -103,16 +105,27 @@
         android:layout_marginBottom="45dp" />
 
 
-    <ImageButton
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+    
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:scaleType="fitXY"
-        android:id="@+id/dialog"
-        android:src="@drawable/call"
+        android:id="@+id/voice_command"
+        android:src="@drawable/no_voice_icon"
         android:layout_alignParentRight="true"/>
+	
+	<!-- 
+   <ImageButton
+       android:layout_width="32dp"
+       android:layout_height="32dp"
+       android:scaleType="fitXY"
+       android:id="@+id/nightmode"
+       android:src="@drawable/day"
+       android:layout_below="@+id/dialog"
+       android:layout_alignParentRight="true"/> 
+   -->
 
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout 
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
