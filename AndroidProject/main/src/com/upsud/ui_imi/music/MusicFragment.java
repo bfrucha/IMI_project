@@ -175,7 +175,7 @@ public class MusicFragment extends Fragment {
         black = res.getColor(R.color.black);
 
         if(GI_Activity.MODALITIES[Queries.OM_NIGHT_GRAPHICS]) { view.setBackgroundColor(grey); }
-        else 			{ view.setBackgroundColor(white); }
+        else 												  { view.setBackgroundColor(white); }
         
         //Retrieve songs
         sm = new SongManager(getActivity());
