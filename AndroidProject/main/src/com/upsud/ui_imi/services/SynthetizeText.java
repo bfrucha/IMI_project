@@ -36,7 +36,7 @@ public class SynthetizeText extends TextToSpeech {
 			
 			speak(text, TextToSpeech.QUEUE_ADD, null);
 		} else {
-			Toast.makeText(context, "Text to speech is disabled", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "Text to speech is disabled", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

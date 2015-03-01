@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import com.upsud.ui_imi.GI_Activity;
+import com.upsud.ui_imi.music.MusicFragment;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -36,23 +38,6 @@ public class VoiceCommand extends Service {
 	private String TAG = "speech";
 	
 	
-	public final ServiceConnection mServiceConnection = new ServiceConnection() {
-	    @Override
-	    public void onServiceConnected(ComponentName name, IBinder service) {
-	        // if (DEBUG) {Log.d(TAG, "onServiceConnected");} //$NON-NLS-1$
-	    	Log.d("speech", "Service connected");
-	    }
-
-	    @Override
-	    public void onServiceDisconnected(ComponentName name) {
-	        // if (DEBUG) {Log.d(TAG, "onServiceDisconnected");} //$NON-NLS-1$
-	    	Log.d("speech", "Service disconnected");
-	    }
-
-	};
-	
-	
-	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -68,10 +53,10 @@ public class VoiceCommand extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		
-		Intent i = new Intent();
+		/* Intent i = new Intent();
 		i.setAction(Intent.ACTION_CALL);
 		i.putExtra("name", "Bruno");
-		broadcastManager.sendBroadcast(i);
+		broadcastManager.sendBroadcast(i); */
 
 		
 	    speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
@@ -194,7 +179,11 @@ public class VoiceCommand extends Service {
 			case SpeechRecognizer.ERROR_NETWORK: Log.e(TAG, "Network error"); break;
 			case SpeechRecognizer.ERROR_NETWORK_TIMEOUT: Log.e(TAG, "Network timeout error"); break;
 			case SpeechRecognizer.ERROR_NO_MATCH: Log.e(TAG, "No match error"); break;
-			case SpeechRecognizer.ERROR_RECOGNIZER_BUSY: Log.e(TAG, "Recognizer busy error"); speechRecognizer.stopListening(); break;
+			case SpeechRecognizer.ERROR_RECOGNIZER_BUSY: 
+				Log.e(TAG, "Recognizer busy error"); 
+				speechRecognizer.stopListening(); 
+				sendWarning();
+				break;
 			case SpeechRecognizer.ERROR_SERVER: Log.e(TAG, "Server error"); break;
 			case SpeechRecognizer.ERROR_SPEECH_TIMEOUT: if(DEBUG) { Log.e(TAG, "Speech timeout error"); } break;
 			default: Log.e(TAG, "Unknown error");
@@ -279,7 +268,11 @@ public class VoiceCommand extends Service {
 			case SpeechRecognizer.ERROR_NETWORK: Log.e(TAG, "Network error (command)"); break;
 			case SpeechRecognizer.ERROR_NETWORK_TIMEOUT: Log.e(TAG, "Network timeout error (command)"); break;
 			case SpeechRecognizer.ERROR_NO_MATCH: Log.e(TAG, "No match error (command)"); break;
-			case SpeechRecognizer.ERROR_RECOGNIZER_BUSY: Log.e(TAG, "Recognizer busy error (command)"); speechRecognizer.stopListening(); break;
+			case SpeechRecognizer.ERROR_RECOGNIZER_BUSY: 
+				Log.e(TAG, "Recognizer busy error (command)"); 
+				speechRecognizer.stopListening(); 
+				sendWarning(); 
+				break;
 			case SpeechRecognizer.ERROR_SERVER: Log.e(TAG, "Server error (command)"); break;
 			case SpeechRecognizer.ERROR_SPEECH_TIMEOUT: if(DEBUG) { Log.e(TAG, "Speech timeout error (command)"); } break;
 			default: Log.e(TAG, "Unknown error (command)");
@@ -312,19 +305,71 @@ public class VoiceCommand extends Service {
 				if(res.toLowerCase(Locale.getDefault()).contains("call")) {
 					String contactName = res.substring(res.indexOf("call") + 4).trim();
 					
-					GI_Activity.tts.speakText("Trying to call " + contactName);
+					if(!contactName.equals("")) {
+						// send "call" message
+						Intent intent = new Intent();
+						intent.setAction(Intent.ACTION_CALL);
+						intent.putExtra("name", contactName);
+						broadcastManager.sendBroadcast(intent);
+						
+						stopSelf();
+						
+						sendWarning();
+						
+						Handler handler = new Handler();
+						handler.postDelayed(new Runnable() {
+							public void run() {
+								reset();
+								sendRunning();
+							}
+						}, 2000);
+						
+						return;
+					}
+				} else if(res.toLowerCase(Locale.getDefault()).contains("play")) { 
+					String songName = res.substring(res.indexOf("play") + 4).trim();
 					
-					// send "call" message
-					Intent intent = new Intent();
-					intent.putExtra("name", contactName);
-					broadcastManager.sendBroadcast(intent);
-					
-					stopSelf();
-					return;
+					if(!songName.equals("")) {
+						// send "call" message
+						Intent intent = new Intent();
+						intent.setAction(MusicFragment.PLAY_SONG_ACTION);
+						intent.putExtra("name", songName.toLowerCase(Locale.getDefault()));
+						broadcastManager.sendBroadcast(intent);
+						
+						stopSelf();
+						
+						sendWarning();
+						
+						/*Handler handler = new Handler();
+						handler.postDelayed(new Runnable() {
+							public void run() {
+								reset();
+							}
+						}, 2000);*/
+						
+						return;
+					}
 				}
 			}
 			
 			reset();
 		}
+	}
+	
+	/**
+	 * Send a warning when the speech recognizer stopped
+	 */
+	public void sendWarning() {
+		Intent i = new Intent();
+		i.setAction(MusicFragment.VOICE_COMMAND_ACTION);
+		i.putExtra("status", "stopped");
+		broadcastManager.sendBroadcast(i);
+	}
+	
+	public void sendRunning() {
+		Intent i = new Intent();
+		i.setAction(MusicFragment.VOICE_COMMAND_ACTION);
+		i.putExtra("status", "running");
+		broadcastManager.sendBroadcast(i);
 	}
 }

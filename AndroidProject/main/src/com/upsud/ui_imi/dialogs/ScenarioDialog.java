@@ -44,11 +44,13 @@ public class ScenarioDialog extends DialogFragment {
         
         int index = 0;
         for(int count=0; count < fields.length; count++) {
-        	if(!fields[count].getName().equals("graph")) {
-        		filenames[index++] = fields[count].getName();
+        	String filename = fields[count].getName();
+        	
+        	if(!filename.equals("graph")) {
+        		filenames[index++] = filename;
         		
         		// bind name with android id
-        		ids.put(filenames[index-1], builder.getContext().getResources().getIdentifier(filenames[index-1], "raw", builder.getContext().getPackageName()));
+        		ids.put(filename, builder.getContext().getResources().getIdentifier(filename, "raw", builder.getContext().getPackageName()));
         	}
         }
                 

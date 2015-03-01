@@ -2,7 +2,13 @@ package com.upsud.ui_imi;
 
 import java.util.ArrayList;
 
+import com.upsud.ui_imi.call.Contact;
+import com.upsud.ui_imi.call.ContactsManager;
+import com.upsud.ui_imi.dialogs.CallDialog;
 import com.upsud.ui_imi.dialogs.ScenarioDialog;
+import com.upsud.ui_imi.music.MusicFragment;
+import com.upsud.ui_imi.music.Song;
+import com.upsud.ui_imi.music.ViewPagerAdapter;
 import com.upsud.ui_imi.queries.Queries;
 import com.upsud.ui_imi.services.SynthetizeText;
 import com.upsud.ui_imi.services.VoiceCommand;
@@ -11,9 +17,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -21,6 +29,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -28,7 +38,14 @@ import com.upsud.ui_imi.R;
 
 public class GI_Activity extends ActionBarActivity {
 
+	// to post delayed thread
+	Handler handler;
+	Runnable fakeCall;
+	
+	
     private ViewPager mViewPager;
+    private ViewPagerAdapter mSectionsPagerAdapter;
+    public static PagerSlidingTabStrip tabs;
     
     // text to speech
 	public static SynthetizeText tts;
@@ -52,56 +69,33 @@ public class GI_Activity extends ActionBarActivity {
 		// Speech Recognizer
 	    Context activityContext = getBaseContext();
 	    srIntent = new Intent(activityContext, VoiceCommand.class);
-	    //startService(srIntent);
+	    //startService(srIntent); MODALITIES[Queries.IM_SPEECH] = true;
 	    
-	    /*IntentFilter filter = new IntentFilter();
+	    IntentFilter filter = new IntentFilter();
 	    filter.addAction(Intent.ACTION_CALL);
-	    LocalBroadcastManager.getInstance(getBaseContext()).registerReceiver(new CallBroadcastReceiver(), filter);*/
+	    LocalBroadcastManager.getInstance(getBaseContext()).registerReceiver(new CallBroadcastReceiver(), filter);
+	    
     }
 
     private void setUpViewPager() {
         // Set up the adapter
-        ViewPagerAdapter mSectionsPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // The ViewPager will keep in memory only 3 pages
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(3);
 
         // Add tabs to the actionBar
         final ActionBar actionBar = getSupportActionBar();
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        //Set up the left icon to go back to Establishment page
-        //actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.hide();
-        // Add a tabListener to navigate through an other page
-       /*ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            @Override
-            public void onTabSelected(ActionBar.Tab tab,
-                                      FragmentTransaction fragmentTransaction) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(ActionBar.Tab tab,
-                                        FragmentTransaction fragmentTransaction) {
-                // nothing to do here
-            }
-
-            @Override
-            public void onTabReselected(ActionBar.Tab tab,
-                                        FragmentTransaction fragmentTransaction) {
-                // nothing to do here
-            }
-        };*/
 
 
         // Bind the tabs to the ViewPager
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         if (tabs != null) {
             tabs.setViewPager(mViewPager);
 
@@ -109,20 +103,19 @@ public class GI_Activity extends ActionBarActivity {
             Log.d("test", "tabs null");
         }
         
-        /*
-        // Add titles and tabListeners to the three actionBar tabs
-        actionBar.addTab(actionBar.newTab().setText("Soft").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Hard").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("Tapas/Snack").setTabListener(tabListener));
+        
 
-        // Add a setOnPageChangerListener to indicate where we are inside the container
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });*/
-        //  tabs.setTextColor(getResources().getColor(R.color.blue));
+        // voice command for playing a song
+        // look for the title of the song
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MusicFragment.PLAY_SONG_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+        	public void onReceive(Context context, Intent intent) {
+        		
+        		MusicFragment fragment = ((MusicFragment) mSectionsPagerAdapter.getItem(0));
+        		fragment.findAndPlay(intent.getStringExtra("name"));
+        	}
+        }, filter);
     }
     
     
@@ -192,25 +185,105 @@ public class GI_Activity extends ActionBarActivity {
 			android.util.Log.d("Modalities", text);
 		}
 		
-		stopService(srIntent);
-		if(MODALITIES[Queries.IM_SPEECH]) { startService(srIntent); }
-		else { Log.d("speech", "Not started"); }
-		
 		// simulate call
-		if(scenarioID == R.raw.scenario_12am) {
-			Handler handler = new Handler();
-			handler.postDelayed(new Runnable() {
+		if(scenarioID == R.raw.scenario_12pm) {
+			handler = new Handler();
+			fakeCall = new Runnable() {
 				
 				public void run() {
+					// call from random contact
 					ContactsManager cm = new ContactsManager(getBaseContext());
 		            Contact c = cm.getRandomContact();
 	
-		            new CallDialog(c.getName(), c.getPhoneNumber(), c.getPhoto(), false).show(getSupportFragmentManager(), "call");
+		            tts.speakText(c.getName() + " is calling you");
+		            
+		            new CallDialog(c.getName(), c.getPhoneNumber(), c.getPhoto(), false) {
+		            	private boolean[] savedModalities = new boolean[Queries.MODALITIES_NUMBER];
+            		
+		            	public void onCreate(Bundle savedInstanceState) {
+		            		super.onCreate(savedInstanceState);
+
+		            		for(int index = 0; index < savedModalities.length; index++) {
+		            			savedModalities[index] = MODALITIES[index];
+		            		}
+		            		
+		            		// dynamically change modalities
+		            		MODALITIES[Queries.IM_SPEECH] = false;
+		            		MODALITIES[Queries.OM_MUSIC] = false;
+		            		MODALITIES[Queries.OM_TEXT_TO_SPEECH] = false;
+		            		
+		            		update();
+		            	}
+		            	
+		            	
+		            	@Override
+		            	public void onDestroy() {
+		            		super.onDestroy();
+		            		
+				            // reset saved modalities
+		            		for(int index = 0; index < savedModalities.length; index++) {
+		            			MODALITIES[index] = savedModalities[index];
+		            		}
+		            		
+		            		update();
+		            	}
+		            	
+		            }.show(getSupportFragmentManager(), "call");
 				}
 				
-			}, 10000);
+			};
+			handler.postDelayed(fakeCall, 5000);
+		} else { 
+			if(handler != null) { handler.removeCallbacks(fakeCall); }
 		}
+		
+		
+		/* UPDATE ACCORDING TO MODALITIES */
+		update();
 	}
+	
+	
+	/**
+	 * Update all the fragments according to the current modalities
+	 */
+	private void update() {
+		Resources res = getResources();
+		
+		int grey = res.getColor(R.color.grey);
+		int white = res.getColor(R.color.white);
+		int black = res.getColor(R.color.black);
+		
+		// change background color of each musicfragment
+		for(int position = 0; position < 3; position++) {
+			MusicFragment fragment = ((MusicFragment) mSectionsPagerAdapter.getItem(position));
+			
+			fragment.updateBackgroundColor();
+			fragment.updateButtons();
+			fragment.updateVoiceCommand();
+			fragment.updateMusic();
+		}
+		
+		if(MODALITIES[Queries.OM_DAY_GRAPHICS]) {
+            tabs.setIndicatorColor(black);
+            tabs.setUnderlineColor(black);
+            tabs.setBackgroundColor(white);
+            tabs.setTextColor(black);
+        }
+        else {
+            tabs.setIndicatorColor(white);
+            tabs.setUnderlineColor(white);
+            tabs.setBackgroundColor(grey);
+            tabs.setTextColor(white);
+        }
+		
+
+		// set speech recognizer on/off
+		stopService(srIntent);
+		if(MODALITIES[Queries.IM_SPEECH]) { startService(srIntent); }
+		else { Log.d("speech", "Not started"); }
+	}
+	
+	
 	
 	
 	
@@ -226,6 +299,8 @@ public class GI_Activity extends ActionBarActivity {
 			for(int i = 0; i < 4; i ++) { 
 				number += (int)(10 * (9 * Math.random())) + " ";
 			}
+			
+			tts.speakText("Trying to call " + name);
 			
 			new CallDialog(name, number.trim(), null, true).show(getSupportFragmentManager(), "Calling");
 		}
