@@ -1,0 +1,411 @@
+@charset "UTF-8";
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+@-webkit-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@-moz-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@-ms-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@-o-keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+@keyframes playLoader {
+  from {
+    background-position: 50% 0px; }
+  to {
+    background-position: 0px -4092px; } }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Helvetica,Arial; }
+  body *:focus {
+    outline: 0; }
+
+#main {
+  width: 1024px;
+  height: 768px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: #1D1D20;
+  overflow: hidden;
+  font-family: Roboto; }
+  #main #header {
+    width: 100%;
+    height: 44px;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    background: transparent url("../img/topbar.png") left top no-repeat; }
+  #main #header2 {
+    width: 100%;
+    height: 147px;
+    position: absolute;
+    top: -16px;
+    left: 0px;
+    z-index: 10;
+    background: #2D2D32; }
+    #main #header2 ul {
+      width: 706.5px;
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+      bottom: 0px; }
+      #main #header2 ul li {
+        width: 25%;
+        float: left;
+        position: relative;
+        text-align: center;
+        font-size: 21px;
+        font-weight: 500;
+        padding-bottom: 25px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4); }
+        #main #header2 ul li.current {
+          color: white; }
+          #main #header2 ul li.current span {
+            width: 100%;
+            height: 3px;
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            background: #83BB00; }
+
+#main-circle {
+  width: 869px;
+  height: 676px;
+  position: absolute;
+  top: 55px;
+  left: 88.5px;
+  z-index: 0; }
+  #main-circle #player {
+    position: absolute;
+    top: 131px;
+    left: 303px;
+    z-index: 1000; }
+    #main-circle #player img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+      -o-backface-visibility: hidden;
+      backface-visibility: hidden; }
+    #main-circle #player.player1 #player1 {
+      -webkit-transform: rotateY(0deg);
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      -o-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+      -webkit-transition: all ease 0.4s;
+      -moz-transition: all ease 0.4s;
+      -ms-transition: all ease 0.4s;
+      -o-transition: all ease 0.4s;
+      transition: all ease 0.4s; }
+    #main-circle #player.player1 #player2 {
+      -webkit-transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      -ms-transform: rotateY(180deg);
+      -o-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+      -webkit-transition: all ease 0.4s;
+      -moz-transition: all ease 0.4s;
+      -ms-transition: all ease 0.4s;
+      -o-transition: all ease 0.4s;
+      transition: all ease 0.4s; }
+    #main-circle #player.player2 #player1 {
+      -webkit-transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      -ms-transform: rotateY(180deg);
+      -o-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+      -webkit-transition: all ease 0.4s;
+      -moz-transition: all ease 0.4s;
+      -ms-transition: all ease 0.4s;
+      -o-transition: all ease 0.4s;
+      transition: all ease 0.4s; }
+    #main-circle #player.player2 #player2 {
+      -webkit-transform: rotateY(0deg);
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      -o-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+      -webkit-transition: all ease 0.4s;
+      -moz-transition: all ease 0.4s;
+      -ms-transition: all ease 0.4s;
+      -o-transition: all ease 0.4s;
+      transition: all ease 0.4s; }
+  #main-circle .deg_container {
+    width: 500px;
+    height: 500px;
+    margin: -250px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
+    -moz-transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
+    -ms-transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
+    -o-transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
+    transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1); }
+  #main-circle.artists #albums {
+    opacity: 0; }
+  #main-circle.artists #titles {
+    opacity: 0; }
+  #main-circle.albums #albums {
+    opacity: 1;
+    -webkit-transition: 0.7s ease opacity 0.1s;
+    -moz-transition: 0.7s ease opacity 0.1s;
+    -ms-transition: 0.7s ease opacity 0.1s;
+    -o-transition: 0.7s ease opacity 0.1s;
+    transition: 0.7s ease opacity 0.1s; }
+  #main-circle.albums #titles {
+    opacity: 0; }
+  #main-circle.titles #albums {
+    opacity: 1;
+    -webkit-transition: 0.7s ease opacity 0.1s;
+    -moz-transition: 0.7s ease opacity 0.1s;
+    -ms-transition: 0.7s ease opacity 0.1s;
+    -o-transition: 0.7s ease opacity 0.1s;
+    transition: 0.7s ease opacity 0.1s; }
+  #main-circle.titles #titles {
+    opacity: 1;
+    -webkit-transition: 0.7s ease opacity 0.1s;
+    -moz-transition: 0.7s ease opacity 0.1s;
+    -ms-transition: 0.7s ease opacity 0.1s;
+    -o-transition: 0.7s ease opacity 0.1s;
+    transition: 0.7s ease opacity 0.1s; }
+
+/**
+ * Position icons into circle (SO)
+ * http://stackoverflow.com/q/12813573/1397351 
+ */
+.circle-container {
+  position: absolute;
+  top: 40px;
+  left: 240px;
+  width: 500px;
+  height: 500px;
+  padding: 2.8em;
+  /*= 2em * 1.4 (2em = half the width of an img, 1.4 = sqrt(2))*/
+  border-radius: 50%;
+  margin: 1.75em auto 0;
+  -webkit-transform: rotate3d(0, 0, 0, 0);
+  -moz-transform: rotate3d(0, 0, 0, 0);
+  -ms-transform: rotate3d(0, 0, 0, 0);
+  -o-transform: rotate3d(0, 0, 0, 0);
+  transform: rotate3d(0, 0, 0, 0); }
+  .circle-container.rules {
+    border: dashed 1px rgba(255, 255, 255, 0.8);
+    /* this is just for showing the angle on hover */
+    /* this is for showing the circle on which the images are placed */ }
+    .circle-container.rules .circle-container li:not(.center):before {
+      position: absolute;
+      width: 4em;
+      color: white;
+      opacity: 0;
+      background: rgba(255, 255, 255, 0.5);
+      font: 1.25em/3.45 Courier, monospace;
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-indent: -2em;
+      text-shadow: 0 0 .1em deeppink;
+      transition: .7s;
+      /* only works in Firefox */
+      content: attr(class) "°"; }
+    .circle-container.rules .circle-container li:hover:before {
+      opacity: 1; }
+    .circle-container.rules .circle-container:after {
+      position: absolute;
+      top: 2.8em;
+      left: 2.8em;
+      width: 500px;
+      height: 500px;
+      border: dashed 1px deeppink;
+      border-radius: 50%;
+      opacity: 1;
+      pointer-events: none;
+      content: ''; }
+    .circle-container.rules .circle-container:hover:after {
+      opacity: 1; }
+    .circle-container.rules .circle-container li:not(.center):after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      box-shadow: 0 0 .5em .5em white;
+      margin: -2px;
+      background: deeppink;
+      opacity: 1;
+      content: ''; }
+    .circle-container.rules .circle-container:hover a:after {
+      opacity: 1; }
+    .circle-container.rules .circle-container a:hover:after {
+      opacity: .3; }
+
+.circle-container li {
+  width: 500px;
+  height: 500px;
+  margin: -250px;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%; }
+  .circle-container li span {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-110%) translateY(-50%);
+    -moz-transform: translateX(-110%) translateY(-50%);
+    -ms-transform: translateX(-110%) translateY(-50%);
+    -o-transform: translateX(-110%) translateY(-50%);
+    transform: translateX(-110%) translateY(-50%);
+    text-align: right;
+    color: white; }
+  .circle-container li img {
+    display: block;
+    width: auto;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(0.2);
+    -moz-transform: translateX(-50%) translateY(-50%) scale(0.2);
+    -ms-transform: translateX(-50%) translateY(-50%) scale(0.2);
+    -o-transform: translateX(-50%) translateY(-50%) scale(0.2);
+    transform: translateX(-50%) translateY(-50%) scale(0.2); }
+
+.circle-container img {
+  display: block;
+  width: 100%; }
+
+.deg113 {
+  transform: rotate(120deg) translate(250px) rotate(-120deg); }
+
+.deg135 {
+  transform: rotate(140deg) translate(250px) rotate(-140deg); }
+
+.deg158 {
+  transform: rotate(160deg) translate(250px) rotate(-160deg); }
+
+.deg180 {
+  transform: translate(-250px); }
+
+.deg202 {
+  transform: rotate(200deg) translate(250px) rotate(-200deg);
+  font-size: 24px;
+  font-weight: 100; }
+
+.deg225 {
+  transform: rotate(220deg) translate(250px) rotate(-220deg);
+  font-size: 18px;
+  font-weight: 100; }
+
+.deg247 {
+  transform: rotate(240deg) translate(250px) rotate(-240deg);
+  font-size: 12px;
+  font-weight: 100; }
+
+.current {
+  font-size: 25px;
+  font-weight: 400; }
+  .current img {
+    opacity: 1; }
+
+.current1 {
+  font-size: 24px;
+  font-weight: 100; }
+  .current1 img {
+    opacity: 0.75; }
+
+.current2 {
+  font-size: 18px;
+  font-weight: 100; }
+  .current2 img {
+    opacity: 0.50; }
+
+.current3 {
+  font-size: 12px;
+  font-weight: 100; }
+  .current3 img {
+    opacity: 0.25; }
+
+.current4 img {
+  opacity: 0.1; }
+.current4 span {
+  opacity: 0; }
+
+/*# sourceMappingURL=styles.css.map */

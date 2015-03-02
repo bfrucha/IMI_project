@@ -1,0 +1,325 @@
+body{
+	-webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    *:focus {
+	    outline: 0;
+	}
+	font-family: Helvetica,Arial;
+}
+
+#main{
+	width:(2048 / 2)+px;
+	height:(1536 / 2)+px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	@include transform(translateX(-50%) translateY(-50%));
+	background: #1D1D20;
+	overflow: hidden;
+	font-family: Roboto;
+	#header{
+		width: 100%;
+		height:44px;
+		position:relative;
+		top:0;
+		left:0;
+		z-index:20;
+		background:transparent url('../img/topbar.png') left top no-repeat;
+	}
+	#header2{
+		width:100%;
+		height:(294 / 2)+px;
+		position:absolute;
+		top:(-32 / 2)+px;
+		left:0px;
+		z-index:10;
+		background:#2D2D32;
+		ul{
+			width:(1413 / 2)+px;
+			position:absolute;
+			left:50%;
+			@include transform(translateX(-50%));
+			bottom:0px;
+			li{
+				width:25%;
+				float:left;
+				position:relative;
+				text-align: center;
+				font-size: 21px;
+				font-weight: 500;
+				padding-bottom:25px;
+				text-transform: uppercase;
+				color:rgba(255,255,255,0.4);
+				&.current{
+					color:rgba(255,255,255,1);
+					span{
+						width:100%;
+						height:3px;
+						position:absolute;
+						left:0;
+						bottom:0px;
+						background: #83BB00;
+					}
+				}
+			}
+		}
+	}
+}
+
+#main-circle{
+	width:(1738 / 2)+px;
+	height:(1352 / 2)+px;
+	position:absolute;
+	top:(110 / 2)+px;
+	left:(177 / 2)+px;
+	z-index:0;
+	#player{
+		position: absolute;
+		top: 131px;
+		left: 303px;
+		z-index:1000;
+		img{
+			position:absolute;
+			top:0;
+			left:0;
+			@include backfaceVisibility(hidden);
+		}
+		&.player1{
+			#player1{
+				@include transform(rotateY(0deg));
+				@include transition(all ease 0.4s,null);
+			}
+			#player2{
+				@include transform(rotateY(180deg));
+				@include transition(all ease 0.4s,null);
+			}
+		}
+		&.player2{
+			#player1{
+				@include transform(rotateY(180deg));
+				@include transition(all ease 0.4s,null);
+			}
+			#player2{
+				@include transform(rotateY(0deg));
+				@include transition(all ease 0.4s,null);
+			}
+		}
+	}
+	.deg_container{
+		width: 500px;
+		height: 500px;
+		margin: -250px;
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		@include transform(rotate3d(0,0,0,0) scale3d(1,1,1));
+	}
+	&.artists{
+		#albums{
+			opacity: 0;
+		}
+		#titles{
+			opacity: 0;
+		}
+	}
+	&.albums{
+		#albums{
+			opacity: 1;
+			@include transition(0.7s ease opacity 0.1s,null);
+		}
+		#titles{
+			opacity: 0;
+		}
+	}
+	&.titles{
+		#albums{
+			opacity: 1;
+			@include transition(0.7s ease opacity 0.1s,null);
+		}
+		#titles{
+			opacity: 1;
+			@include transition(0.7s ease opacity 0.1s,null);
+		}
+	}
+}
+
+/**
+ * Position icons into circle (SO)
+ * http://stackoverflow.com/q/12813573/1397351 
+ */
+.circle-container {
+	position: absolute;
+	top: 40px;
+	left: 240px;
+	// width: 24em;
+	// height: 24em;
+	width:500px;
+	height:500px;
+	padding: 2.8em; /*= 2em * 1.4 (2em = half the width of an img, 1.4 = sqrt(2))*/
+	border-radius: 50%;
+	margin: 1.75em auto 0;
+	@include transform(rotate3d(0,0,0,0));
+
+	&.rules{
+		border: dashed 1px rgba(255,255,255,0.8);
+		/* this is just for showing the angle on hover */
+		.circle-container li:not(.center):before {
+			position: absolute;
+			width: 4em;
+			color: white;
+			opacity: 0;
+			background: rgba(255,255,255,.5);
+			font: 1.25em/3.45 Courier, monospace;
+			letter-spacing: 2px;
+			text-decoration: none;
+			text-indent: -2em;
+			text-shadow: 0 0 .1em deeppink;
+			transition: .7s; /* only works in Firefox */
+			content: attr(class)'°';
+		}
+		.circle-container li:hover:before { opacity: 1; }
+
+		/* this is for showing the circle on which the images are placed */
+		.circle-container:after {
+			position: absolute;
+			top: 2.8em; 
+			left: 2.8em;
+			// width: 24em; 
+			// height: 24em;
+			width:500px;
+			height:500px;
+			border: dashed 1px deeppink;
+			border-radius: 50%;
+			opacity: 1;
+			pointer-events: none;
+			content: '';
+		}
+		.circle-container:hover:after { opacity: 1; }
+		.circle-container li:not(.center):after {
+			position: absolute;
+			top: 50%; 
+			left: 50%;
+			width: 4px; 
+			height: 4px;
+			border-radius: 50%;
+			box-shadow: 0 0 .5em .5em white;
+			margin: -2px;
+			background: deeppink;
+			opacity: 1;
+			content: '';
+		}
+		.circle-container:hover a:after { opacity: 1; }
+		.circle-container a:hover:after { opacity: .3; }
+	}
+}
+.circle-container li {
+	// width: 4em; 
+	// height: 4em;
+	// margin: -2em; /* 2em = 4em/2 */ /* half the width */
+	width:500px;
+	height:500px;
+	margin: -250px;
+	display: block;
+	overflow: hidden;
+	position: absolute;
+	top: 50%; 
+	left: 50%;
+	span{
+		display: block;
+		width:100%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		@include transform(translateX(-110%) translateY(-50%));
+		text-align: right;
+		color:white;
+	}
+	img{
+		display: block;
+		width:auto;
+		height: auto;
+		position:absolute;
+		left:50%;
+		top:50%;
+		@include transform(translateX(-50%) translateY(-50%) scale(0.2));
+	}
+}
+.circle-container img { display: block; width: 100%; }
+// .deg0 { transform: translate(12em); } /* 12em = half the width of the wrapper */
+// .deg45 { transform: rotate(45deg) translate(12em) rotate(-45deg); }
+// .deg135 { transform: rotate(135deg) translate(12em) rotate(-135deg); }
+// .deg180 { transform: translate(-12em); }
+// .deg225 { transform: rotate(225deg) translate(12em) rotate(-225deg); }
+// .deg315 { transform: rotate(315deg) translate(12em) rotate(-315deg); }
+
+.deg113 { 
+	transform: rotate(120deg) translate(250px) rotate(-120deg); 
+}
+.deg135 { 
+	transform: rotate(140deg) translate(250px) rotate(-140deg); 
+}
+.deg158 { 
+	transform: rotate(160deg) translate(250px) rotate(-160deg);
+}
+.deg180 { 
+	transform: translate(-250px);
+}
+.deg202 { 
+	transform: rotate(200deg) translate(250px) rotate(-200deg);
+	font-size: (48 / 2)+px;
+	font-weight: 100;
+}
+.deg225 { 
+	transform: rotate(220deg) translate(250px) rotate(-220deg);
+	font-size: (36 / 2)+px;
+	font-weight: 100;
+}
+.deg247 { 
+	transform: rotate(240deg) translate(250px) rotate(-240deg);
+	font-size: (24 / 2)+px;
+	font-weight: 100;
+}
+
+.current{
+	font-size: (50 / 2)+px;
+	font-weight: 400;
+	img{
+		opacity: 1;
+	}
+}
+.current1{
+	font-size: (48 / 2)+px;
+	font-weight: 100;
+	img{
+		opacity: 0.75;
+	}
+}
+.current2{
+	font-size: (36 / 2)+px;
+	font-weight: 100;
+	img{
+		opacity: 0.50;
+	}
+}
+.current3{
+	font-size: (24 / 2)+px;
+	font-weight: 100;
+	img{
+		opacity: 0.25;
+	}
+}
+.current4{
+	img{
+		opacity: 0.1;
+	}
+	span{
+		opacity: 0;
+	}
+}
+
+
+
+
+
+

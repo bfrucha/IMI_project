@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Leapdroid UI - Circle</title>
+  <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'> -->
+  <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+  <section id="main">
+    <header id="header"></header>
+    <header id="header2">
+      <ul>
+        <li>Playlists<span></span></li>
+        <li class="current">Artists<span></span></li>
+        <li>Albums<span></span></li>
+        <li>Titles<span></span></li>
+      </ul>
+    </header>
+    <div class="artists" id="main-circle">
+      <div id='player' class="player1">
+        <img src='img/Player.png' id="player1">
+        <img src='img/Player2.png' id="player2">
+      </div>
+      <div class='circle-container current_circle' id="artists">
+          <li class='deg247 current3'>
+            <div class='deg_container'>
+              <img src='img/artists/Daft_Punk.png'>
+              <span>Daft Punk</span>
+            </div>
+          </li>
+          <li class='deg225 current2'>
+            <div class='deg_container'>
+                <img src='img/artists/Joey_Badass.png'>
+                <span>Joey Badass</span>
+            </div>
+          </li>
+          <li class='deg202 current1'>
+            <div class='deg_container'>
+                <img src='img/artists/Kiasmos.png'>
+                <span>Kiasmos</span>
+            </div>
+          </li>
+          <li class='deg180 current'>
+            <div class='deg_container'>
+                <img src='img/artists/Moderat.png'>
+                <span>Moderat</span>
+            </div>
+          </li>
+          <li class='deg158 current1'>
+            <div class='deg_container'>
+                <img src='img/artists/Modeselektor.png'>
+                <span>Modeselektor</span>
+            </div>
+          </li>
+          <li class='deg135 current2'>
+            <div class='deg_container'>
+                <img src='img/artists/Rone.png'>
+                <span>Rone</span>
+            </div>
+          </li>
+          <li class='deg113 current3'>
+            <div class='deg_container'>
+                <img src='img/artists/The_Doors.png'>
+                <span>The Doors</span>
+            </div>
+          </li>
+      </div>
+      <!-- ALBUMS -->
+      <div class='circle-container' id="albums">
+          <li class='deg180 current'>
+            <div class='deg_container'>
+                <img src='img/albums/Moderat_II.png'>
+                <span>II</span>
+            </div>
+          </li>
+          <li class='deg158 current1'>
+            <div class='deg_container'>
+                <img src='img/albums/Moderat_Moderat.png'>
+                <span>Moderat EP</span>
+            </div>
+          </li>
+      </div>
+      <!-- TITLES -->
+      <div class='circle-container' id="titles">
+          <li class='deg180 current'>
+            <div class='deg_container'>
+                <img src='img/albums/Moderat_II.png'>
+                <span>The Mark</span>
+            </div>
+          </li>
+          <li class='deg158 current1'>
+            <div class='deg_container'>
+                <img src='img/albums/Moderat_II.png'>
+                <span>Bad Kingdom</span>
+            </div>
+          </li>
+          <li class='deg135 current2'>
+            <div class='deg_container'>
+                <img src='img/albums/Moderat_II.png'>
+                <span>Versions</span>
+            </div>
+          </li>
+          <li class='deg113 current3'>
+            <div class='deg_container'>
+                <img src='img/albums/Moderat_II.png'>
+                <span>Let in the Light</span>
+            </div>
+          </li>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/libs/jquery-1.7.2.min.js"></script>
+  <script src="js/libs/greensock/src/minified/TweenMax.min.js"></script>
+  <script src="js/libs/greensock/src/minified/plugins/RoundPropsPlugin.min.js"></script>
+  <script src="js/libs/underscore.min.js"></script>
+  <script src="js/libs/leap.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/script.js"></script>
+  
+</body>
+</html>
